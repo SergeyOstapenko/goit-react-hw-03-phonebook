@@ -17,6 +17,19 @@ export class App extends Component {
     number: '',
   };
 
+  componentDidMount() {
+    const contacts = (localStorage.getItem('contacts'));
+    if(contacts) {
+      this.setState({contacts:JSON.parse(contacts)})
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+    }
+  }
+
   handlerSubmit = data => {
     const inContacts = this.state.contacts.some(
       contact =>
